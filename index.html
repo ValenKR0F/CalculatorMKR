@@ -1,27 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Calculadora de Materiales</title>
   <style>
+    /* Fondo animado */
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f4f4f4;
       margin: 0;
       padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('ciudad.gif') no-repeat center center fixed;
+      background-size: cover;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
+      position: relative;
+    }
+
+    /* Filtro para oscurecer el fondo */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 0;
     }
 
     .calculator {
+      position: relative;
+      z-index: 1;
       background: white;
       padding: 30px;
       border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
       max-width: 400px;
       width: 90%;
     }
@@ -29,7 +42,7 @@
     h1 {
       text-align: center;
       margin-bottom: 24px;
-      color: #333;
+      color: #222;
     }
 
     label {
@@ -70,7 +83,7 @@
       font-size: 18px;
       font-weight: bold;
       text-align: center;
-      color: #222;
+      color: #000;
     }
   </style>
 </head>
@@ -93,7 +106,7 @@
 
     <button onclick="calcularTotal()">Calcular</button>
 
-    <div id="resultado"></div>
+    <div id="resultado">Total: $0</div>
   </div>
 
   <script>
