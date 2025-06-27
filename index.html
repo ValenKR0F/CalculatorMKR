@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calculadora de Materiales</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .calculator {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 90%;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 24px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+      color: #444;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 12px;
+      background-color: #0078D7;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #005bb5;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculator">
+    <h1>Calculadora de Materiales</h1>
+
+    <label for="diamantes">Ingresar la cantidad de diamantes</label>
+    <input type="number" id="diamantes" placeholder="Ejemplo: 500">
+
+    <label for="estano">Ingresar la cantidad de estaño</label>
+    <input type="number" id="estano" placeholder="Ejemplo: 620">
+
+    <label for="plata">Ingresar la cantidad de plata</label>
+    <input type="number" id="plata" placeholder="Ejemplo: 467">
+
+    <label for="plomo">Ingresar la cantidad de plomo</label>
+    <input type="number" id="plomo" placeholder="Ejemplo: 349">
+
+    <button onclick="calcularTotal()">Calcular</button>
+
+    <div id="resultado"></div>
+  </div>
+
+  <script>
+    function calcularTotal() {
+      const diamantes = parseInt(document.getElementById("diamantes").value) || 0;
+      const estano = parseInt(document.getElementById("estano").value) || 0;
+      const plata = parseInt(document.getElementById("plata").value) || 0;
+      const plomo = parseInt(document.getElementById("plomo").value) || 0;
+
+      const total = (diamantes * 2500) + (estano * 2500) + (plata * 2000) + (plomo * 1500);
+
+      document.getElementById("resultado").textContent = "Total: $" + total.toLocaleString();
+    }
+  </script>
+
+</body>
+</html>
