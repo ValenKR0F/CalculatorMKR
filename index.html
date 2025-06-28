@@ -26,19 +26,26 @@
       z-index: 0;
     }
 
-    .calculator-wrapper {
+    .calculator-border {
       position: relative;
-      padding: 4px;
+      padding: 2px;
       border-radius: 20px;
-      background: url('lineargb.gif') center/cover no-repeat;
-      background-size: 100% 100%;
+      background: linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet, red);
+      background-size: 400% 400%;
+      animation: borderRGB 8s linear infinite;
       z-index: 1;
+    }
+
+    @keyframes borderRGB {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .calculator {
       background: white;
       padding: 30px;
-      border-radius: 16px;
+      border-radius: 18px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
       max-width: 400px;
       width: 90%;
@@ -96,7 +103,7 @@
 </head>
 <body>
 
-  <div class="calculator-wrapper">
+  <div class="calculator-border">
     <div class="calculator">
       <h1>Calculadora de Materiales</h1>
 
