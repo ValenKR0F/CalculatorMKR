@@ -5,16 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Calculadora de Materiales</title>
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       font-family: 'Segoe UI', sans-serif;
       background: url('ciudad.gif') no-repeat center center fixed;
       background-size: cover;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
+      height: 100vh;
       position: relative;
     }
 
@@ -26,17 +30,17 @@
       z-index: 0;
     }
 
-    .calculator-container {
+    .border-wrapper {
       position: relative;
       z-index: 1;
-      border-radius: 22px;
-      padding: 3px; /* Espacio para mostrar el borde */
+      padding: 4px;
+      border-radius: 20px;
       background: linear-gradient(90deg, red, yellow, lime, cyan, blue, magenta, red);
-      background-size: 300% 300%;
-      animation: rgbBorder 2s linear infinite;
+      background-size: 400% 400%;
+      animation: borderRGB 3s linear infinite;
     }
 
-    @keyframes rgbBorder {
+    @keyframes borderRGB {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
@@ -45,31 +49,28 @@
     .calculator {
       background: white;
       padding: 30px;
-      border-radius: 18px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-      max-width: 400px;
-      width: 90%;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      width: 370px;
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 24px;
-      color: #222;
+      margin-bottom: 20px;
     }
 
     label {
       display: block;
       margin-top: 15px;
       font-weight: 600;
-      color: #444;
     }
 
     input[type="number"] {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
-      border: 1px solid #ccc;
       border-radius: 8px;
+      border: 1px solid #ccc;
       font-size: 16px;
     }
 
@@ -83,7 +84,6 @@
       font-size: 16px;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
     }
 
     button:hover {
@@ -95,13 +95,11 @@
       font-size: 18px;
       font-weight: bold;
       text-align: center;
-      color: #000;
     }
   </style>
 </head>
 <body>
-
-  <div class="calculator-container">
+  <div class="border-wrapper">
     <div class="calculator">
       <h1>Calculadora de Materiales</h1>
 
@@ -135,6 +133,5 @@
       document.getElementById("resultado").textContent = "Total: $" + total.toLocaleString();
     }
   </script>
-
 </body>
 </html>
