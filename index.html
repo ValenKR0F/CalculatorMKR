@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Calculadora de Materiales</title>
   <style>
-    /* Fondo animado */
     body {
       margin: 0;
       padding: 0;
@@ -19,7 +18,6 @@
       position: relative;
     }
 
-    /* Filtro para oscurecer el fondo */
     body::before {
       content: "";
       position: absolute;
@@ -28,15 +26,24 @@
       z-index: 0;
     }
 
-    .calculator {
+    .calculator-wrapper {
       position: relative;
+      padding: 4px;
+      border-radius: 20px;
+      background: url('lineargb.gif') center/cover no-repeat;
+      background-size: 100% 100%;
       z-index: 1;
+    }
+
+    .calculator {
       background: white;
       padding: 30px;
       border-radius: 16px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
       max-width: 400px;
       width: 90%;
+      position: relative;
+      z-index: 2;
     }
 
     h1 {
@@ -89,24 +96,26 @@
 </head>
 <body>
 
-  <div class="calculator">
-    <h1>Calculadora de Materiales</h1>
+  <div class="calculator-wrapper">
+    <div class="calculator">
+      <h1>Calculadora de Materiales</h1>
 
-    <label for="diamantes">Ingresar la cantidad de diamantes</label>
-    <input type="number" id="diamantes" placeholder="Ejemplo: 500">
+      <label for="diamantes">Ingresar la cantidad de diamantes</label>
+      <input type="number" id="diamantes" placeholder="Ejemplo: 500">
 
-    <label for="estano">Ingresar la cantidad de estaño</label>
-    <input type="number" id="estano" placeholder="Ejemplo: 620">
+      <label for="estano">Ingresar la cantidad de estaño</label>
+      <input type="number" id="estano" placeholder="Ejemplo: 620">
 
-    <label for="plata">Ingresar la cantidad de plata</label>
-    <input type="number" id="plata" placeholder="Ejemplo: 467">
+      <label for="plata">Ingresar la cantidad de plata</label>
+      <input type="number" id="plata" placeholder="Ejemplo: 467">
 
-    <label for="plomo">Ingresar la cantidad de plomo</label>
-    <input type="number" id="plomo" placeholder="Ejemplo: 349">
+      <label for="plomo">Ingresar la cantidad de plomo</label>
+      <input type="number" id="plomo" placeholder="Ejemplo: 349">
 
-    <button onclick="calcularTotal()">Calcular</button>
+      <button onclick="calcularTotal()">Calcular</button>
 
-    <div id="resultado">Total: $0</div>
+      <div id="resultado">Total: $0</div>
+    </div>
   </div>
 
   <script>
