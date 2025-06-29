@@ -37,7 +37,7 @@
       border-radius: 20px;
       background: linear-gradient(90deg, red, yellow, lime, cyan, blue, magenta, red);
       background-size: 400% 400%;
-      animation: borderRGB 3s linear infinite;
+      animation: borderRGB 2s linear infinite;
     }
 
     @keyframes borderRGB {
@@ -97,87 +97,88 @@
       text-align: center;
     }
 
-    /* Reloj circular */
-    .reloj {
+    .clock-container {
       position: fixed;
-      bottom: 15px;
+      bottom: 20px;
       right: 20px;
       display: flex;
       gap: 15px;
-      z-index: 3;
+      z-index: 10;
     }
 
-    .reloj .circle {
-      text-align: center;
+    .clock {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
     }
 
-    .reloj svg {
-      width: 70px;
-      height: 70px;
-      transform: rotate(-90deg);
+    .circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #1c1c1c;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      box-shadow: inset 0 0 5px #000;
+      overflow: hidden;
     }
 
-    .reloj .bg {
-      fill: none;
-      stroke: #eee;
-      stroke-width: 3;
+    .circle::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: conic-gradient(#00f 0%, #0ff 25%, #0f0 50%, #ff0 75%, #f00 100%);
+      animation: rotate 2s linear infinite;
+      z-index: 0;
+      mask: radial-gradient(farthest-side, transparent 60%, black 61%);
+      -webkit-mask: radial-gradient(farthest-side, transparent 60%, black 61%);
     }
 
-    .reloj .progress {
-      fill: none;
-      stroke: white;
-      stroke-width: 3;
-      stroke-linecap: round;
+    .time {
+      font-size: 22px;
+      font-weight: bold;
+      position: relative;
+      z-index: 1;
     }
 
-    .reloj .timeText {
-      font-size: 0.6rem;
-      fill: white;
-      text-anchor: middle;
-      transform: rotate(90deg);
-      transform-origin: center;
+    .label {
+      margin-top: 5px;
       font-size: 14px;
       font-weight: bold;
     }
 
-    .reloj .label {
-      margin-top: 5px;
-      font-size: 12px;
-      color: white;
-      font-weight: bold;
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
-
-  <!-- Reloj en esquina inferior derecha -->
-  <div class="reloj">
-    <div class="circle">
-      <svg viewBox="0 0 36 36">
-        <path class="bg" d="M18 2.0845a 15.9155 15.9155 0 0 1 0 31.831a 15.9155 15.9155 0 0 1 0 -31.831" />
-        <path class="progress" id="hoursProgress" d="" />
-        <text x="18" y="20.5" class="timeText" id="hoursText">00</text>
-      </svg>
-      <div class="label">Horas</div>
+  <!-- Reloj estilo animado -->
+  <div class="clock-container">
+    <div class="clock">
+      <div class="circle"><div class="time" id="hours">00</div></div>
+      <div class="label">Hours</div>
     </div>
-    <div class="circle">
-      <svg viewBox="0 0 36 36">
-        <path class="bg" d="M18 2.0845a 15.9155 15.9155 0 0 1 0 31.831a 15.9155 15.9155 0 0 1 0 -31.831" />
-        <path class="progress" id="minutesProgress" d="" />
-        <text x="18" y="20.5" class="timeText" id="minutesText">00</text>
-      </svg>
-      <div class="label">Minutos</div>
+    <div class="clock">
+      <div class="circle"><div class="time" id="minutes">00</div></div>
+      <div class="label">Minutes</div>
     </div>
-    <div class="circle">
-      <svg viewBox="0 0 36 36">
-        <path class="bg" d="M18 2.0845a 15.9155 15.9155 0 0 1 0 31.831a 15.9155 15.9155 0 0 1 0 -31.831" />
-        <path class="progress" id="secondsProgress" d="" />
-        <text x="18" y="20.5" class="timeText" id="secondsText">00</text>
-      </svg>
-      <div class="label">Segundos</div>
+    <div class="clock">
+      <div class="circle"><div class="time" id="seconds">00</div></div>
+      <div class="label">Seconds</div>
     </div>
   </div>
 
+  <!-- Calculadora con borde RGB -->
   <div class="border-wrapper">
     <div class="calculator">
       <h1>Calculadora de Materiales</h1>
@@ -206,44 +207,24 @@
       const estano = parseInt(document.getElementById("estano").value) || 0;
       const plata = parseInt(document.getElementById("plata").value) || 0;
       const plomo = parseInt(document.getElementById("plomo").value) || 0;
-
       const total = (diamantes * 2500) + (estano * 2500) + (plata * 2000) + (plomo * 1500);
       document.getElementById("resultado").textContent = "Total: $" + total.toLocaleString();
     }
 
-    function actualizarRelojArgentina() {
-      const ahora = new Date();
-      const utc = ahora.getTime() + ahora.getTimezoneOffset() * 60000;
-      const argHora = new Date(utc - 3 * 60 * 60000);
-
-      const h = argHora.getHours();
-      const m = argHora.getMinutes();
-      const s = argHora.getSeconds();
-
-      document.getElementById("hoursText").textContent = h.toString().padStart(2, '0');
-      document.getElementById("minutesText").textContent = m.toString().padStart(2, '0');
-      document.getElementById("secondsText").textContent = s.toString().padStart(2, '0');
-
-      document.getElementById("hoursProgress").setAttribute("d", generarArco(h / 24));
-      document.getElementById("minutesProgress").setAttribute("d", generarArco(m / 60));
-      document.getElementById("secondsProgress").setAttribute("d", generarArco(s / 60));
+    function updateClock() {
+      const now = new Date();
+      const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+      const argentina = new Date(utc - (3 * 60 * 60000));
+      const h = String(argentina.getHours()).padStart(2, '0');
+      const m = String(argentina.getMinutes()).padStart(2, '0');
+      const s = String(argentina.getSeconds()).padStart(2, '0');
+      document.getElementById('hours').textContent = h;
+      document.getElementById('minutes').textContent = m;
+      document.getElementById('seconds').textContent = s;
     }
 
-    function generarArco(fraccion) {
-      const x = 18;
-      const y = 18;
-      const r = 15.9155;
-      const endAngle = fraccion * 2 * Math.PI;
-      const endX = x + r * Math.cos(endAngle - Math.PI / 2);
-      const endY = y + r * Math.sin(endAngle - Math.PI / 2);
-      const largeArc = fraccion > 0.5 ? 1 : 0;
-
-      return `M ${x} ${y - r}
-              A ${r} ${r} 0 ${largeArc} 1 ${endX} ${endY}`;
-    }
-
-    setInterval(actualizarRelojArgentina, 1000);
-    actualizarRelojArgentina();
+    setInterval(updateClock, 1000);
+    updateClock();
   </script>
 </body>
 </html>
