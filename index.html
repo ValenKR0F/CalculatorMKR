@@ -37,7 +37,7 @@
       border-radius: 20px;
       background: linear-gradient(90deg, red, yellow, lime, cyan, blue, magenta, red);
       background-size: 400% 400%;
-      animation: borderRGB 2s linear infinite;
+      animation: borderRGB 3s linear infinite;
     }
 
     @keyframes borderRGB {
@@ -97,88 +97,58 @@
       text-align: center;
     }
 
-    .clock-container {
+    .clock {
       position: fixed;
       bottom: 20px;
       right: 20px;
       display: flex;
-      gap: 15px;
+      gap: 20px;
       z-index: 10;
     }
 
-    .clock {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-family: 'Segoe UI', sans-serif;
-      color: white;
-    }
-
-    .circle {
+    .time-circle {
       width: 80px;
       height: 80px;
       border-radius: 50%;
-      background: #1c1c1c;
+      background: #2c2c2c;
+      border: 5px solid #e0e0e0;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      flex-direction: column;
       position: relative;
-      box-shadow: inset 0 0 5px #000;
-      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
     }
 
-    .circle::before {
-      content: '';
-      position: absolute;
-      top: -5px;
-      left: -5px;
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: conic-gradient(#00f 0%, #0ff 25%, #0f0 50%, #ff0 75%, #f00 100%);
-      animation: rotate 2s linear infinite;
-      z-index: 0;
-      mask: radial-gradient(farthest-side, transparent 60%, black 61%);
-      -webkit-mask: radial-gradient(farthest-side, transparent 60%, black 61%);
-    }
-
-    .time {
+    .time-circle span {
       font-size: 22px;
       font-weight: bold;
-      position: relative;
-      z-index: 1;
+      color: white;
     }
 
     .label {
       margin-top: 5px;
       font-size: 14px;
       font-weight: bold;
+      color: white;
     }
 
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .time-progress {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      border-radius: 50%;
+      border: 5px solid white;
+      border-color: #000 #000 #000 transparent;
+      transform: rotate(0deg);
+      transform-origin: center;
+      transition: transform 0.1s linear;
     }
   </style>
 </head>
 <body>
-  <!-- Reloj estilo animado -->
-  <div class="clock-container">
-    <div class="clock">
-      <div class="circle"><div class="time" id="hours">00</div></div>
-      <div class="label">Hours</div>
-    </div>
-    <div class="clock">
-      <div class="circle"><div class="time" id="minutes">00</div></div>
-      <div class="label">Minutes</div>
-    </div>
-    <div class="clock">
-      <div class="circle"><div class="time" id="seconds">00</div></div>
-      <div class="label">Seconds</div>
-    </div>
-  </div>
-
-  <!-- Calculadora con borde RGB -->
   <div class="border-wrapper">
     <div class="calculator">
       <h1>Calculadora de Materiales</h1>
@@ -201,26 +171,58 @@
     </div>
   </div>
 
+  <div class="clock">
+    <div class="time-circle">
+      <span id="hours">00</span>
+      <div class="label">Hours</div>
+      <div class="time-progress" id="h-progress"></div>
+    </div>
+    <div class="time-circle">
+      <span id="minutes">00</span>
+      <div class="label">Minutes</div>
+      <div class="time-progress" id="m-progress"></div>
+    </div>
+    <div class="time-circle">
+      <span id="seconds">00</span>
+      <div class="label">Seconds</div>
+      <div class="time-progress" id="s-progress"></div>
+    </div>
+  </div>
+
   <script>
     function calcularTotal() {
       const diamantes = parseInt(document.getElementById("diamantes").value) || 0;
       const estano = parseInt(document.getElementById("estano").value) || 0;
       const plata = parseInt(document.getElementById("plata").value) || 0;
       const plomo = parseInt(document.getElementById("plomo").value) || 0;
+
       const total = (diamantes * 2500) + (estano * 2500) + (plata * 2000) + (plomo * 1500);
+
       document.getElementById("resultado").textContent = "Total: $" + total.toLocaleString();
     }
 
     function updateClock() {
       const now = new Date();
-      const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-      const argentina = new Date(utc - (3 * 60 * 60000));
-      const h = String(argentina.getHours()).padStart(2, '0');
-      const m = String(argentina.getMinutes()).padStart(2, '0');
-      const s = String(argentina.getSeconds()).padStart(2, '0');
+      const options = { timeZone: 'America/Argentina/Buenos_Aires' };
+      const localTime = new Intl.DateTimeFormat('en-US', {
+        ...options,
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      }).formatToParts(now);
+
+      let h = localTime.find(p => p.type === 'hour').value;
+      let m = localTime.find(p => p.type === 'minute').value;
+      let s = localTime.find(p => p.type === 'second').value;
+
       document.getElementById('hours').textContent = h;
       document.getElementById('minutes').textContent = m;
       document.getElementById('seconds').textContent = s;
+
+      document.getElementById('h-progress').style.transform = `rotate(${h * 15}deg)`;
+      document.getElementById('m-progress').style.transform = `rotate(${m * 6}deg)`;
+      document.getElementById('s-progress').style.transform = `rotate(${s * 6}deg)`;
     }
 
     setInterval(updateClock, 1000);
