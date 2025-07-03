@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Calculadora de Materiales</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -15,11 +16,8 @@
       font-family: 'Segoe UI', sans-serif;
       background: url('ciudad.gif') no-repeat center center fixed;
       background-size: cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       height: 100vh;
-      position: relative;
+      overflow-x: hidden;
     }
 
     body::before {
@@ -30,9 +28,50 @@
       z-index: 0;
     }
 
-    .border-wrapper {
+    /* Barra superior */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background-color: white;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .logo {
+      height: 30px;
+    }
+
+    .topbar-icons {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .topbar-icons img {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+
+    .container {
+      margin-top: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: calc(100vh - 80px);
       position: relative;
       z-index: 1;
+    }
+
+    .border-wrapper {
+      position: relative;
       padding: 4px;
       border-radius: 20px;
       background: linear-gradient(90deg, red, yellow, lime, cyan, blue, magenta, red);
@@ -97,7 +136,8 @@
       text-align: center;
     }
 
-    .clock {
+    /* Reloj */
+    .clock-container {
       position: fixed;
       bottom: 20px;
       right: 20px;
@@ -106,86 +146,97 @@
       z-index: 10;
     }
 
-    .time-circle {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: #2c2c2c;
-      border: 5px solid #e0e0e0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      position: relative;
+    .clock-part {
+      text-align: center;
       font-family: 'Segoe UI', sans-serif;
     }
 
-    .time-circle span {
+    .circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #222;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
       font-size: 22px;
-      font-weight: bold;
+      margin-bottom: 5px;
+      border: 6px solid #eee;
+      position: relative;
+    }
+
+    .clock-label {
+      font-weight: 600;
       color: white;
     }
 
-    .label {
-      margin-top: 5px;
-      font-size: 14px;
-      font-weight: bold;
-      color: white;
-    }
-
-    .time-progress {
+    /* Indicador dinámico (reloj estilo semicircular) */
+    .circle::after {
+      content: '';
       position: absolute;
+      top: -6px;
+      left: -6px;
       width: 100%;
       height: 100%;
-      top: 0;
-      left: 0;
       border-radius: 50%;
-      border: 5px solid white;
-      border-color: #000 #000 #000 transparent;
+      border: 6px solid transparent;
+      border-top-color: black;
       transform: rotate(0deg);
       transform-origin: center;
-      transition: transform 0.1s linear;
+      transition: transform 0.3s ease-in-out;
     }
   </style>
 </head>
 <body>
-  <div class="border-wrapper">
-    <div class="calculator">
-      <h1>Calculadora de Materiales</h1>
 
-      <label for="diamantes">Ingresar la cantidad de diamantes</label>
-      <input type="number" id="diamantes" placeholder="Ejemplo: 500">
-
-      <label for="estano">Ingresar la cantidad de estaño</label>
-      <input type="number" id="estano" placeholder="Ejemplo: 620">
-
-      <label for="plata">Ingresar la cantidad de plata</label>
-      <input type="number" id="plata" placeholder="Ejemplo: 467">
-
-      <label for="plomo">Ingresar la cantidad de plomo</label>
-      <input type="number" id="plomo" placeholder="Ejemplo: 349">
-
-      <button onclick="calcularTotal()">Calcular</button>
-
-      <div id="resultado">Total: $0</div>
+  <!-- Topbar con logotipo y buscador -->
+  <div class="topbar">
+    <img src="logo-mkr.svg" alt="MKR Logo" class="logo">
+    <div class="topbar-icons">
+      <img src="menu.svg" alt="Menú">
+      <img src="search.svg" alt="Buscar">
     </div>
   </div>
 
-  <div class="clock">
-    <div class="time-circle">
-      <span id="hours">00</span>
-      <div class="label">Hours</div>
-      <div class="time-progress" id="h-progress"></div>
+  <div class="container">
+    <div class="border-wrapper">
+      <div class="calculator">
+        <h1>Calculadora de Materiales</h1>
+
+        <label for="diamantes">Ingresar la cantidad de diamantes</label>
+        <input type="number" id="diamantes" placeholder="Ejemplo: 500">
+
+        <label for="estano">Ingresar la cantidad de estaño</label>
+        <input type="number" id="estano" placeholder="Ejemplo: 620">
+
+        <label for="plata">Ingresar la cantidad de plata</label>
+        <input type="number" id="plata" placeholder="Ejemplo: 467">
+
+        <label for="plomo">Ingresar la cantidad de plomo</label>
+        <input type="number" id="plomo" placeholder="Ejemplo: 349">
+
+        <button onclick="calcularTotal()">Calcular</button>
+
+        <div id="resultado">Total: $0</div>
+      </div>
     </div>
-    <div class="time-circle">
-      <span id="minutes">00</span>
-      <div class="label">Minutes</div>
-      <div class="time-progress" id="m-progress"></div>
+  </div>
+
+  <!-- Reloj -->
+  <div class="clock-container">
+    <div class="clock-part">
+      <div class="circle" id="hour">--</div>
+      <div class="clock-label">Hours</div>
     </div>
-    <div class="time-circle">
-      <span id="seconds">00</span>
-      <div class="label">Seconds</div>
-      <div class="time-progress" id="s-progress"></div>
+    <div class="clock-part">
+      <div class="circle" id="minute">--</div>
+      <div class="clock-label">Minutes</div>
+    </div>
+    <div class="clock-part">
+      <div class="circle" id="second">--</div>
+      <div class="clock-label">Seconds</div>
     </div>
   </div>
 
@@ -204,25 +255,11 @@
     function updateClock() {
       const now = new Date();
       const options = { timeZone: 'America/Argentina/Buenos_Aires' };
-      const localTime = new Intl.DateTimeFormat('en-US', {
-        ...options,
-        hour12: false,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      }).formatToParts(now);
+      const time = now.toLocaleTimeString('en-US', { hour12: false, ...options }).split(':');
 
-      let h = localTime.find(p => p.type === 'hour').value;
-      let m = localTime.find(p => p.type === 'minute').value;
-      let s = localTime.find(p => p.type === 'second').value;
-
-      document.getElementById('hours').textContent = h;
-      document.getElementById('minutes').textContent = m;
-      document.getElementById('seconds').textContent = s;
-
-      document.getElementById('h-progress').style.transform = `rotate(${h * 15}deg)`;
-      document.getElementById('m-progress').style.transform = `rotate(${m * 6}deg)`;
-      document.getElementById('s-progress').style.transform = `rotate(${s * 6}deg)`;
+      document.getElementById('hour').textContent = time[0].padStart(2, '0');
+      document.getElementById('minute').textContent = time[1].padStart(2, '0');
+      document.getElementById('second').textContent = time[2].padStart(2, '0');
     }
 
     setInterval(updateClock, 1000);
