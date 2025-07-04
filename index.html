@@ -28,7 +28,6 @@
       z-index: 0;
     }
 
-    /* Barra superior */
     .topbar {
       position: fixed;
       top: 0;
@@ -52,13 +51,18 @@
       display: flex;
       gap: 20px;
       align-items: center;
+      font-size: 20px;
     }
 
-    .topbar-icons img.icon-group {
-      height: 28px;
-      width: auto;
+    .icon {
       cursor: pointer;
-      image-rendering: auto;
+      font-weight: bold;
+      user-select: none;
+      transition: transform 0.2s ease;
+    }
+
+    .icon:hover {
+      transform: scale(1.2);
     }
 
     .container {
@@ -137,7 +141,6 @@
       text-align: center;
     }
 
-    /* Reloj */
     .clock-container {
       position: fixed;
       bottom: 20px;
@@ -191,11 +194,12 @@
 </head>
 <body>
 
-  <!-- Topbar con logotipo y buscador -->
   <div class="topbar">
     <img src="logo-mkr.svg" alt="MKR Logo" class="logo">
     <div class="topbar-icons">
-      <img src="topbar-icons.png" alt="Iconos" class="icon-group">
+      <span class="icon" onclick="buscar()">🔍</span>
+      <span class="icon" onclick="mostrarMenu()">☰</span>
+      <span class="icon" onclick="mostrarAyuda()">❕</span>
     </div>
   </div>
 
@@ -203,27 +207,20 @@
     <div class="border-wrapper">
       <div class="calculator">
         <h1>Calculadora de Materiales</h1>
-
         <label for="diamantes">Ingresar la cantidad de diamantes</label>
         <input type="number" id="diamantes" placeholder="Ejemplo: 500">
-
         <label for="estano">Ingresar la cantidad de estaño</label>
         <input type="number" id="estano" placeholder="Ejemplo: 620">
-
         <label for="plata">Ingresar la cantidad de plata</label>
         <input type="number" id="plata" placeholder="Ejemplo: 467">
-
         <label for="plomo">Ingresar la cantidad de plomo</label>
         <input type="number" id="plomo" placeholder="Ejemplo: 349">
-
         <button onclick="calcularTotal()">Calcular</button>
-
         <div id="resultado">Total: $0</div>
       </div>
     </div>
   </div>
 
-  <!-- Reloj -->
   <div class="clock-container">
     <div class="clock-part">
       <div class="circle" id="hour">--</div>
@@ -258,6 +255,19 @@
       document.getElementById('hour').textContent = time[0].padStart(2, '0');
       document.getElementById('minute').textContent = time[1].padStart(2, '0');
       document.getElementById('second').textContent = time[2].padStart(2, '0');
+    }
+
+    function buscar() {
+      const termino = prompt("¿Qué querés buscar?");
+      if (termino) alert("Buscaste: " + termino);
+    }
+
+    function mostrarMenu() {
+      alert("Menú abierto (a futuro podés poner navegación).");
+    }
+
+    function mostrarAyuda() {
+      alert("Esta es una calculadora de materiales. Ingresá valores y presioná Calcular.");
     }
 
     setInterval(updateClock, 1000);
