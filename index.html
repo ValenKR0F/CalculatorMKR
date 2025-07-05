@@ -190,6 +190,17 @@
       transform-origin: center;
       transition: transform 0.3s ease-in-out;
     }
+
+    .version {
+      position: fixed;
+      bottom: 5px;
+      right: 22px;
+      font-family: 'Corbel', 'Segoe UI', sans-serif;
+      font-weight: 300;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.75);
+      z-index: 10;
+    }
   </style>
 </head>
 <body>
@@ -236,6 +247,8 @@
     </div>
   </div>
 
+  <div class="version">Versión 0.1.0</div>
+
   <script>
     function calcularTotal() {
       const diamantes = parseInt(document.getElementById("diamantes").value) || 0;
@@ -267,9 +280,8 @@
     }
 
     function mostrarAyuda() {
-      alert("¡Hola Genio/a! 👋\n\nBienvenido/a a esta práctica y sencilla calculadora de materiales, pensada especialmente para facilitarte el proceso de estimar el valor total de lo que has farmeado. Su funcionamiento es muy simple: solo debés ingresar la cantidad de materiales que hayas recolectado, y la herramienta automáticamente calculará el monto total en base a los valores actuales de cada uno. ¡Así de fácil!\n\nEs importante aclarar que esta no es una versión definitiva. La calculadora está en constante evolución y sujeta a ajustes según las cotizaciones del mercado. A medida que los precios de los materiales cambien —ya sea por oferta, demanda u otros factores—, iremos actualizando los valores para que siempre obtengas resultados lo más precisos posible.\n\nNuestro objetivo es que tengas una herramienta útil, clara y confiable. Agradecemos muchísimo tu uso y tu confianza en este proyecto. Si tenés sugerencias o encontrás algún error, no dudes en comunicarlo, ya que cada aporte ayuda a mejorar la experiencia para todos.\n\n¡Gracias nuevamente por tu atención y te deseamos un cálido y productivo día! 😁");
+      alert("¡Hola Genio/a! 👋\n\nBienvenido/a a esta práctica y sencilla calculadora de materiales...");
     }
-
 
     setInterval(updateClock, 1000);
     updateClock();
